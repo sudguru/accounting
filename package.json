@@ -1,8 +1,12 @@
 {
   "name": "accounting",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": {
+    "name": "Sudeep Gurung",
+    "email": "sudeepgurung.sg@gmail.com",
+    "url": "https://apptii.com/apps/accounting"
+  },
+  "homepage": "https://apptii.com/apps/accounting",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -35,5 +39,19 @@
     "@ionic/app-scripts": "3.1.9",
     "typescript": "~2.6.2"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "main": "electron/electron.js",
+  "config": {
+    "ionic_bundler": "webpack",
+    "ionic_webpack": "./config/webpack.config.js"
+  },
+  "build": {
+    "appId": "com.apptii.accounting",
+    "electronVersion": "1.8.4",
+    "asar":false,
+    "files": [
+      "www/**/*",
+      "electron/*"
+    ]
+  }
 }
