@@ -9,9 +9,12 @@
   "homepage": "https://apptii.com/apps/accounting",
   "private": true,
   "scripts": {
+    "dev": "nf start",
+    "start": "ionic-app-scripts serve",
+    "electron dist": "electron .",
+    "ebuild": "npm run build && node_modules/.bin/build",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
-    "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },
@@ -37,6 +40,8 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.9",
+    "electron": "^1.8.4",
+    "foreman": "^2.0.0",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
@@ -48,7 +53,7 @@
   "build": {
     "appId": "com.apptii.accounting",
     "electronVersion": "1.8.4",
-    "asar":false,
+    "asar": false,
     "files": [
       "www/**/*",
       "electron/*"
