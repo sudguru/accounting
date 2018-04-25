@@ -25,7 +25,7 @@ export class AuthProvider {
     let res = false;
     const token = localStorage.getItem('token');
     console.log(token)
-    if(token) {
+    if(token) { 
       res = !this.jwtHelper.isTokenExpired(token);
     }
     console.log(res);
