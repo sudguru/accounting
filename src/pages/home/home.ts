@@ -36,10 +36,12 @@ export class HomePage {
   }
 
   ionViewCanEnter() {
-    console.log("asfadf");
-    if(this.auth.isAuthenticated()) {
-      this.navCtrl.setRoot('DashboardPage');
-    }
+    console.log('fadf');
+    console.log(this.auth.isAuthenticated());
+    // if(this.auth.isAuthenticated()) {
+    //     this.navCtrl.setRoot('DashboardPage');
+    // }
+
   }
 
   presentLoadingDefault() {

@@ -15,11 +15,16 @@ export class DashboardPage {
   }
   ionViewCanEnter() {
     if(!this.auth.isAuthenticated()) {
-      this.navCtrl.setRoot('HomePage');
+      this.navCtrl.setRoot('HomePge');
     }
   }
   ionViewDidLoad() {
     this.http.get(`${this.endpoint}/users`).subscribe( res => console.log(res));
+  }
+
+  logout() {
+    this.auth.logout();
+    this.navCtrl.setRoot('HomePage');
   }
 
 }

@@ -20,22 +20,25 @@ export class AuthProvider {
     console.log('Hello AuthProvider Provider');
   }
 
-  async isAuthenticated(): Promise<boolean> {
-    let token = '';
-    token = await this.getToken();
-    return !this.jwtHelper.isTokenExpired(token);
+  isAuthenticated() {
+    
+    let res = false;
+    const token = localStorage.getItem('token');
+    console.log(token)
+    if(token) {
+      res = !this.jwtHelper.isTokenExpired(token);
+    }
+    console.log(res);
+    return res;
   }
 
-  async getToken(){
-    return this.storage.get('token');
-  }
 
 
   async login(username: string, password: string): Promise<boolean> {
     const result = await this.http.post(`${this.endpoint}/auth/login`, { username, password }).toPromise();
     if(!result['error']) {
       const token = result['token'];
-      this.storage.set('token', token);
+      localStorage.setItem('token', token);
       this.storage.set('accuser', this.jwtHelper.decodeToken(token)['user']);
       return true;
     } else {
@@ -67,5 +70,10 @@ export class AuthProvider {
       return false;
     }
     
+  }
+
+  logout() {
+      localStorage.setItem('token', null);
+      this.storage.set('accuser', null);
   }
 }

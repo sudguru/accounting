@@ -7,17 +7,21 @@ import {
 } from '@angular/common/http';
 import { AuthProvider } from './auth';
 import { Observable } from 'rxjs/Observable';
-@Injectable()
-export class TokenInterceptor implements HttpInterceptor {
-  constructor(public auth: AuthProvider) {}
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('intercept');
-    const token = this.auth.getToken();
+import { Storage } from '@ionic/storage';
 
-    console.log(token['__zone_symbol__value']);
+@Injectable()
+
+export class TokenInterceptor implements HttpInterceptor {
+  token = 'aaa.aaa.aaa';
+  constructor(public auth: AuthProvider, private storage: Storage) {
+    
+  }
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    
     request = request.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     });
     return next.handle(request);
