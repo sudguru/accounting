@@ -37,7 +37,7 @@ $colors: (
   primary:    #3169b4,
   secondary:  #99c824,
   danger:     #f53d3d,
-  light:      #f4f4f4,
+  light:      #fafafa,
   dark:       #222
 );
 
@@ -86,3 +86,8 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+$split-pane-side-max-width: 60px;
+$split-pane-side-min-width: 60px;
+
+$menu-width: 60px;

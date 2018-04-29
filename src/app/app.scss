@@ -14,3 +14,55 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.split-pane-md.split-pane-visible > .split-pane-side {
+    z-index: -5;
+    border-right: 0;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.3) !important;
+    background-color: yellow;
+    z-index: 1000 !important;
+}
+
+#mysidemnu
+{
+    background-color: color($colors, "primary");
+}
+
+.menu-inner {
+    width: 60px !important;
+}
+
+#mysidemnu .fab {
+    border-radius: 20%;
+}
+
+#mysidemnu .fab[mini] {
+    margin: 3px 10px;
+}
+
+#mysidemnu .fab-md {
+    -webkit-box-shadow: 0 1px 26px 0 rgba(0, 0, 0, 0.14), 0 1px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 26px 0 rgba(0, 0, 0, 0.14), 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+// button[title]:hover:after{
+//     content: attr(title);
+//     padding: 8px 12px;
+//     color: #85003a;
+//     position: absolute;
+//     left: 0;
+//     top: 100%;
+//     white-space: nowrap;
+//     z-index: 2000;
+//     -moz-border-radius: 3px;
+//     -webkit-border-radius: 3px;
+//     border-radius: 3px;
+//     -moz-box-shadow: 0px 0px 2px #c0c1c2;
+//     -webkit-box-shadow: 0px 0px 2px #c0c1c2;
+//     box-shadow: 0px 0px 2px #c0c1c2;
+//     background-image: -moz-linear-gradient(top, #ffffff, #eeeeee);
+//     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ffffff),color-stop(1, #eeeeee));
+//     background-image: -webkit-linear-gradient(top, #ffffff, #eeeeee);
+//     background-image: -moz-linear-gradient(top, #ffffff, #eeeeee);
+//     background-image: -ms-linear-gradient(top, #ffffff, #eeeeee);
+//     background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
+//     }

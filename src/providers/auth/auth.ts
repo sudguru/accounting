@@ -1,7 +1,9 @@
+import { User } from './../../model/user.interface';
+import { Observable } from 'rxjs/Observable';
 import { Roles } from './../../model/roles.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import 'rxjs/add/observable/of';
 import { JwtHelper } from 'angular2-jwt';
 
 
@@ -16,34 +18,34 @@ export interface Result {
 export class AuthProvider {
   endpoint = 'http://localhost:3000';
   jwtHelper: JwtHelper = new JwtHelper();
-  constructor(public http: HttpClient, private storage: Storage) {
-    console.log('Hello AuthProvider Provider');
-  }
-
-  isAuthenticated() {
+  constructor(public http: HttpClient) {
     
-    let res = false;
+  }
+
+  authState(): Observable<User> {
+    let user = null;
     const token = localStorage.getItem('token');
-    console.log(token)
-    if(token) { 
-      res = !this.jwtHelper.isTokenExpired(token);
+    if(token && !this.jwtHelper.isTokenExpired(token)) {
+      user = this.jwtHelper.decodeToken(token)['user'];
+      return Observable.of(user);
+    } else {
+      return Observable.of(null);
     }
-    console.log(res);
-    return res;
+    
   }
 
 
 
-  async login(username: string, password: string): Promise<boolean> {
+  async login(username: string, password: string): Promise<any> {
     const result = await this.http.post(`${this.endpoint}/auth/login`, { username, password }).toPromise();
     if(!result['error']) {
       const token = result['token'];
       localStorage.setItem('token', token);
-      this.storage.set('accuser', this.jwtHelper.decodeToken(token)['user']);
-      return true;
+      const user = this.jwtHelper.decodeToken(token)['user'];
+      return user;
     } else {
       console.log(result['error']);
-      return false;
+      return null;
     }
   }
 
@@ -73,7 +75,6 @@ export class AuthProvider {
   }
 
   logout() {
-      localStorage.setItem('token', null);
-      this.storage.set('accuser', null);
+      localStorage.removeItem('token');
   }
 }

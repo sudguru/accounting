@@ -1,14 +1,9 @@
-import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs/Observable';
+import { User } from './../../model/user.interface';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, Loading, LoadingController  } from 'ionic-angular';
+import { IonicPage, NavController, MenuController, ToastController, Loading, LoadingController  } from 'ionic-angular';
 
-/**
- * Generated class for the HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -16,19 +11,16 @@ import { IonicPage, NavController, NavParams, ToastController, Loading, LoadingC
   templateUrl: 'home.html',
 })
 export class HomePage {
-  user = {
-    username: '',
-    password: ''
-  };
+  user: User;
   loader: Loading;
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
+    public menuCtrl: MenuController,
     private auth: AuthProvider,
     private toast: ToastController,
-    private loading: LoadingController,
-    private storage: Storage
+    private loading: LoadingController
   ) {
+    this.menuCtrl.enable(false, 'actualsidemenu');
   }
 
   ionViewDidLoad() {
@@ -36,12 +28,19 @@ export class HomePage {
   }
 
   ionViewCanEnter() {
-    console.log('fadf');
-    console.log(this.auth.isAuthenticated());
-    // if(this.auth.isAuthenticated()) {
-    //     this.navCtrl.setRoot('DashboardPage');
-    // }
-
+    this.auth.authState().subscribe(user => {
+      console.log(user);
+      if(user) {
+        this.navCtrl.setRoot('DashboardPage')
+      } else {
+        this.user = {
+          username: '',
+          password: '',
+          name: '',
+          roles: ''
+        }
+      }
+    })
   }
 
   presentLoadingDefault() {
@@ -52,22 +51,18 @@ export class HomePage {
   }
 
   async login() {
-    let name = 'sss';
+
     this.presentLoadingDefault();
-    const result = await this.auth.login(this.user.username, this.user.password);
-    await this.storage.get('accuser').then((val) => {
-      name = val.name;
-      console.log(name);
-    });
+    const result: User = await this.auth.login(this.user.username, this.user.password);
     if(result) {
       this.toast.create({
-        message: `Welcome ${name}.`,
+        message: `Welcome ${result.name}.`,
         duration: 3000
       }).present();
       this.navCtrl.setRoot('DashboardPage');
     } else {
       this.toast.create({
-        message: 'Invalid Credentials, or Session Expired. Please try again.',
+        message: 'Invalid Credentials. Please try again.',
         duration: 3000
       }).present();
     }

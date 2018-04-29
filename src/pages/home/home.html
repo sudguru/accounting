@@ -3,7 +3,7 @@
 
 
 <ion-content>
-    <ion-grid>
+    <ion-grid *ngIf="user">
       <ion-row>
         <ion-col col-12 col-sm-8 col-md-6 col-lg-6 col-xl-4 offset-sm-2 offset-md-3 offset-lg-3 offset-xl-4>
             <form  #loginForm="ngForm" novalidate>
@@ -16,18 +16,17 @@
 
                 <ion-item>
                   <ion-label color="secondary" floating>Username</ion-label>
-                  <ion-input [(ngModel)]="user.username" name="username" required></ion-input>
+                  <ion-input [(ngModel)]="user.username" name="username" required autocomplete="nope"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label color="secondary" floating>Password</ion-label>
-                    <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
+                    <ion-input type="password" [(ngModel)]="user.password" name="password" required autocomplete="new-password"></ion-input>
                   </ion-item>
 
                   <ion-item>
                       <button ion-button block large [disabled]="loginForm.invalid" (click)="login()">Log In</button>
                     </ion-item>
-å
             </ion-list>    
           </form>
         </ion-col>
